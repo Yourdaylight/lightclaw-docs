@@ -166,7 +166,7 @@ export default function Home(): JSX.Element {
 
           {/* CTA */}
           <div className={styles.ctas}>
-            <Link to="/docs/getting-started/installation" className={styles.ctaPrimary}>
+            <Link to="/docs/快速开始/安装指南" className={styles.ctaPrimary}>
               开始使用
               <ArrowRight />
             </Link>
@@ -174,7 +174,7 @@ export default function Home(): JSX.Element {
               <GitHub />
               GitHub
             </a>
-            <Link to="/docs/getting-started/quickstart" className={styles.ctaLink}>
+            <Link to="/docs/快速开始/5分钟上手" className={styles.ctaLink}>
               快速上手 <ChevronRight />
             </Link>
           </div>
@@ -263,7 +263,7 @@ export default function Home(): JSX.Element {
           <h2>你的服务器，值得有一个专属 AI 助手</h2>
           <p>免费开源 · 腾讯云 Lighthouse 一键镜像部署 · 私有数据不出域</p>
           <div className={styles.finalCtaBtns}>
-            <Link to="/docs/getting-started/installation" className={styles.ctaPrimary}>
+            <Link to="/docs/快速开始/安装指南" className={styles.ctaPrimary}>
               免费开始 <ArrowRight />
             </Link>
             <a href="https://github.com/orcakit/finnie" className={styles.ctaGhost} target="_blank" rel="noopener noreferrer">
