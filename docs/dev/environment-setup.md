@@ -1,0 +1,306 @@
+---
+sidebar_position: 1
+title: 开发环境搭建
+description: 从零搭建 LightClaw 的开发环境，包括代码获取、依赖安装、开发配置和调试技巧。
+---
+
+# 开发环境搭建
+
+## 环境要求
+
+| 工具 | 最低版本 | 推荐版本 | 说明 |
+|------|----------|----------|------|
+| Python | 3.11 | 3.12+ | 必须使用受支持版本 |
+| uv | 最新版 | — | 包管理器（推荐） |
+| Node.js | 18+ | 20+ | 前端 Dashboard 开发 |
+| Git | — | — | 版本控制 |
+
+## 获取源码
+
+```bash
+# 克隆仓库
+git clone https://github.com/orcakit/finnie.git
+cd finnie
+
+# 查看可用的分支
+git branch -a
+```
+
+## 后端开发环境
+
+### 使用 uv（推荐）
+
+```bash
+# 安装项目依赖 + 开发依赖
+uv sync --extra dev
+
+# 激活虚拟环境
+source .venv/bin/activate  # Linux/macOS
+# 或 .venv\Scripts\activate  # Windows
+
+# 验证安装成功
+lightclaw --version
+```
+
+### 使用 pip
+
+```bash
+# 创建虚拟环境
+python -m venv .venv
+source .venv/bin/activate
+
+# 安装依赖
+pip install -e ".[dev]"
+
+# 验证
+lightclaw --version
+```
+
+### IDE 配置推荐
+
+#### VS Code
+
+安装以下扩展：
+
+- Python (Microsoft)
+- Pylance (Microsoft)
+- Ruff (charliermarsh)
+
+`.vscode/settings.json`：
+
+```json
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.linting.enabled": true,
+  "python.linting.ruffEnabled": true,
+  "python.formatting.provider": "ruff",
+  "editor.formatOnSave": true,
+  "code-runner.executorMap": {
+    "python": "uv run"
+  }
+}
+```
+
+#### PyCharm
+
+1. File → Settings → Project → Interpreter → 选择 `.venv`
+2. 启用 Ruff 作为 linter 和 formatter
+
+## 前端开发环境
+
+```bash
+# 进入前端目录
+cd dashboard
+
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev       # http://localhost:80
+
+# 生产构建
+npm run build
+
+# Lint 检查
+npm run lint      # ESLint + TypeScript check
+
+# 格式化
+npm run format    # Prettier
+```
+
+## 运行与调试
+
+### 开发模式运行
+
+```bash
+# 后端：使用 uv run 自动激活虚拟环境
+uv run lightclaw run --debug
+
+# 指定端口
+uv run lightclaw run --port 3000 --debug
+```
+
+### 调试模式
+
+`--debug` 标志会启用：
+- 详细的日志输出（DEBUG 级别）
+- Agent 执行的详细 trace
+- MCP 通信的完整日志
+- 性能计时信息
+
+```bash
+uv run lightclaw run --debug > debug.log 2>&1 &
+```
+
+### 使用 VS Code 调试
+
+`.vscode/launch.json`：
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug LightClaw",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "lightclaw.cli.main",
+      "args": ["run", "--port", "3000"],
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+      }
+    },
+    {
+      "name": "Debug Tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["-xvs", "--tb=short"],
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}
+```
+
+## 代码质量工具
+
+### Ruff (Linter + Formatter)
+
+LightClaw 使用 [Ruff](https://docs.astral.sh/ruff/) 统一代码风格。
+
+```bash
+# 检查问题
+ruff check .
+
+# 自动修复
+ruff check . --fix
+
+# 格式化
+ruff format .
+
+# 同时检查和格式化
+ruff check . --fix && ruff format .
+```
+
+Ruff 配置在 `pyproject.toml` 中定义：
+
+```toml
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF", "TID"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+```
+
+### Pre-commit Hooks
+
+```bash
+# 安装 pre-commit hooks
+pre-commit install
+
+# 手动运行所有 hooks
+pre-commit run --all-files
+```
+
+已配置的 hooks：
+- `ruff` — 代码检查
+- `ruff-format` — 代码格式化
+- `check-yaml` — YAML 文件检查
+- `end-of-file-fixer` — 文件末尾换行检查
+
+## 测试
+
+```bash
+# 运行所有测试
+pytest
+
+# 详细输出
+pytest -xvs
+
+# 运行特定文件
+pytest tests/test_memory.py -xvs
+
+# 运行特定测试
+pytest tests/test_memory.py::test_memory_extract -xvs
+
+# 覆盖率报告
+pytest --cov=src/lightclaw --cov-report=html
+
+# 只运行快速测试（跳过标记为 slow 的）
+pytest -m "not slow"
+
+# 类型检查
+mypy src/lightclaw/
+```
+
+## Docker 开发环境
+
+如果不想在本地安装所有依赖，可以使用 Docker：
+
+```bash
+# 构建开发镜像
+docker build -t lightclaw-dev -f Dockerfile.dev .
+
+# 进入容器开发
+docker run -it \
+  -v $(pwd):/app \
+  -p 80:80 \
+  lightclaw-dev bash
+
+# 容器内操作
+uv sync --extra dev
+lightclaw run --host 0.0.0.0
+```
+
+## 常见问题
+
+<details>
+<summary><strong>Q: uv 安装失败？</strong></summary>
+
+```bash
+# macOS
+brew install uv
+
+# Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+</details>
+
+<details>
+<summary><strong>Q: 依赖冲突怎么办？</strong></summary>
+
+```bash
+# 清除缓存重新同步
+uv cache clean
+uv lock
+uv sync --extra dev
+
+# 如果仍有冲突，查看具体冲突
+uv tree
+```
+</details>
+
+<details>
+<summary><strong>Q: 如何查看完整的依赖树？</strong></summary>
+
+```bash
+uv pip list --format=json | python -m json.tool
+```
+</details>
+
+## 下一步
+
+→ [项目源码结构](/docs/dev/project-structure) - 了解代码组织方式
+→ [自定义技能开发](/docs/dev/custom-skill-dev) - 开始编写你的第一个技能
+→ [贡献指南](/docs/dev/contributing) - 了解如何参与贡献

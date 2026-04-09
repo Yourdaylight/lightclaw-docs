@@ -1,0 +1,520 @@
+/* ================================================================
+   LightClaw Docs — Professional Theme
+   配色：深灰 + 冷白 + 微光 accent（靛蓝/青色）
+   动画：入场渐显 + 滚动触发 + 悬浮微交互
+   ================================================================ */
+
+:root {
+  /* ── 主色调 — 靛蓝系，专业沉稳 ── */
+  --ifm-color-primary: #4f46e5;
+  --ifm-color-primary-dark: #4338ca;
+  --ifm-color-primary-darker: #3730a3;
+  --ifm-color-primary-darkest: #312e81;
+  --ifm-color-primary-light: #6366f1;
+  --ifm-color-primary-lighter: #818cf8;
+  --ifm-color-primary-lightest: #e0e7ff;
+
+  /* 辅助色 */
+  --ifm-color-success: #059669;
+  --ifm-color-info: #0891b2;
+  --ifm-color-warning: #d97706;
+  --ifm-color-danger: #dc2626;
+
+  /* 中性色 — 更细腻的灰度 */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --surface-elevated: #ffffff;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+
+  --ifm-code-font-size: 90%;
+  --docusaurus-highlighted-line-bg: rgba(79, 70, 229, 0.06);
+  --docusaurus-highlighted-code-line-bg: rgba(79, 70, 229, 0.06);
+
+  /* 字体 */
+  --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --ifm-font-family-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code',
+    Consolas, monospace;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #818cf8;
+  --ifm-color-primary-dark: #6366f1;
+  --ifm-color-primary-darker: #4f46e5;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #a5b4fc;
+  --ifm-color-primary-lighter: #c7d2fe;
+  --ifm-color-primary-lightest: #1e1b4b;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --surface: #0f172a;
+  --surface-alt: #1e293b;
+  --surface-elevated: #1e293b;
+  --border: #334155;
+  --border-light: #1e293b;
+
+  --docusaurus-highlighted-line-bg: rgba(129, 140, 248, 0.12);
+  --docusaurus-highlighted-code-line-bg: rgba(129, 140, 248, 0.12);
+}
+
+/* ===== 全局动画关键帧 ===== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(79, 70, 229, 0.25); }
+}
+
+/* ===== Navbar — Fixed + Glass + Visible everywhere ===== */
+.navbar {
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+  border-bottom: 1px solid var(--border-light);
+  transition: all 0.3s ease !important;
+}
+
+/* On homepage (no sidebar), keep it visible over the dark hero */
+/* Docusaurus already applies .navbar--fixed-top with position:fixed */
+/* We just ensure contrast */
+
+[data-theme='dark'] .navbar {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border-bottom-color: rgba(51, 65, 85, 0.6);
+}
+
+/* Scroll shadow */
+.navbar--fixed-top {
+  box-shadow: none !important;
+}
+.navbar--fixed-top:not(.navbar--home) {
+  box-shadow: 0 1px 8px rgba(0,0,0,.06) !important;
+}
+
+.navbar__title {
+  font-weight: 800 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: -0.03em;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--ifm-color-primary) !important;
+  opacity: 1 !important;
+}
+
+/* ===== 文档内容 ===== */
+.markdown {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.markdown h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, var(--text-primary), var(--ifm-color-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.markdown h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: 3rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.markdown h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 2rem;
+}
+
+.markdown p {
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+/* ===== 表格 ===== */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  width: 100%;
+}
+
+thead th {
+  background: linear-gradient(135deg, var(--surface-alt), var(--surface));
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr {
+  transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+  background: var(--ifm-color-primary-lightest) !important;
+}
+
+td, th {
+  padding: 0.7rem 1rem;
+  border: none;
+}
+
+/* ===== 代码块 ===== */
+.docusaurus-highlight-code-line {
+  background-color: var(--docusaurus-highlighted-code-line-bg) !important;
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+  border-left: 3px solid var(--ifm-color-primary);
+  border-radius: 0;
+}
+
+div[class*='codeBlockTitle'] {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: 8px 8px 0 0;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  font-size: 0.82rem;
+}
+
+pre {
+  border-radius: 0 0 8px 8px !important;
+  border: 1px solid var(--border) !important;
+  border-top: none !important;
+}
+
+code {
+  font-size: 0.88em !important;
+}
+
+/* ===== Admonition ===== */
+.admonition {
+  border-radius: 10px !important;
+  border-left-width: 4px !important;
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+}
+
+.admonition:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.admonition-heading {
+  font-weight: 700 !important;
+  font-size: 0.88rem !important;
+  letter-spacing: 0.01em;
+}
+
+/* ===== Mermaid ===== */
+.mermaid {
+  background: var(--surface) !important;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+}
+
+/* ═══════ Sidebar 侧边栏 — Premium Design System ═══════
+   Inspired by: Linear / Stripe / Vercel docs
+   Principles: Clean hierarchy · Strong active anchor · Generous whitespace · Subtle depth
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Sidebar container ── */
+.theme-doc-sidebar {
+  position: relative;
+}
+
+.menu {
+  padding: 0.5rem 0;
+}
+
+/* ── Category (group) headers — the backbone of hierarchy ── */
+.theme-doc-sidebar-item-category > .menu__link {
+  display: flex;
+  align-items: center;
+  font-weight: 700 !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--text-tertiary) !important;
+  padding: 0.65rem 0.75rem 0.45rem !important;
+  margin-top: 1.2rem !important;          /* ← 大间距：分组间呼吸感 */
+  margin-bottom: 0.2rem !important;
+  transition: color .18s ease !important;
+  /* 去掉之前的小圆点伪元素 — 极简 */
+}
+.theme-doc-sidebar-item-category > .menu__link::before {
+  content: none !important;               /* ← 清除旧装饰 */
+}
+
+.theme-doc-sidebar-item-category > .menu__link:hover {
+  color: var(--text-secondary) !important;
+}
+
+/* First category — no top margin so it sits naturally under the logo area */
+.theme-doc-sidebar-menu > .menu__list > .theme-doc-sidebar-item-category:first-child > .menu__link {
+  margin-top: 0.3rem !important;
+}
+
+/* Category expanded state indicator — subtle arrow rotation handled by Docusaurus,
+   we just style the text color */
+.theme-doc-sidebar-item-category.menu__list-item--collapsed > .menu__link {
+  opacity: 0.7;
+}
+
+/* ── Menu items — clean, clickable, no noise ── */
+.theme-doc-sidebar-item-link > .menu__link {
+  display: flex !important;
+  align-items: center !important;
+  font-size: 0.88rem !important;
+  font-weight: 450 !important;
+  line-height: 1.5 !important;
+  color: var(--text-secondary) !important;
+  border-radius: 8px !important;
+  margin: 1px 0 !important;
+  padding: 0.52rem 0.85rem !important;
+  transition: all .18s cubic-bezier(.4,0,.2,1) !important;
+  border: none !important;
+  position: relative;
+  /* No left-border on normal state — keep it ultra-clean */
+  border-left: none !important;
+}
+
+/* Hover — subtle lift + color shift */
+.theme-doc-sidebar-item-link > .menu__link:hover {
+  background: var(--surface-alt) !important;
+  color: var(--text-primary) !important;
+  transform: translateX(2px);
+}
+
+/* ══ ACTIVE STATE — the visual anchor ══
+   Strong, unmissable, but not loud.
+   Background pill + accent color + slight left emphasis. */
+.theme-doc-sidebar-item-link > .menu__link.menu__link--active {
+  background: var(--ifm-color-primary-lightest) !important;
+  color: var(--ifm-color-primary-dark) !important;
+  font-weight: 620 !important;
+  transform: translateX(0) !important;
+  box-shadow:
+    inset 3px 0 0 var(--ifm-color-primary),
+    0 1px 3px rgba(79,70,229,.08);
+  border-radius: 6px 8px 8px 6px !important;
+}
+
+/* Dark mode active — stronger glow for visibility */
+[data-theme='dark'] .theme-doc-sidebar-item-link > .menu__link.menu__link--active {
+  background: rgba(99,102,241,.12) !important;
+  color: var(--ifm-color-primary-lighter) !important;
+  box-shadow:
+    inset 3px 0 0 var(--ifm-color-primary),
+    0 1px 3px rgba(129,140,248,.15);
+}
+
+/* ── Nested sub-categories (2nd level) ── */
+.theme-doc-sidebar-item-category .theme-doc-sidebar-item-category > .menu__link {
+  font-weight: 600 !important;
+  font-size: 0.82rem !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: var(--text-primary) !important;
+  padding: 0.45rem 0.75rem 0.35rem !important;
+  margin-top: 0.6rem !important;
+}
+.theme-doc-sidebar-item-category .theme-doc-sidebar-item-category > .menu__link::before {
+  content: none !important;
+}
+
+/* Nested links (3rd level) — slightly indented, lighter */
+.theme-doc-sidebar-item-category .theme-doc-sidebar-item-category .theme-doc-sidebar-item-link > .menu__link {
+  font-size: 0.84rem !important;
+  padding-left: 1.5rem !important;
+  opacity: 0.88;
+}
+
+/* ── Divider between top sections and bottom sections ── */
+.theme-doc-sidebar-menu .menu__list > .theme-doc-sidebar-item-link:last-of-type {
+  margin-top: 0.5rem;
+}
+
+/* ── Toggle button (collapse/expand sidebar) ── */
+.theme-doc-sidebar-collapse-button {
+  margin-top: 1rem;
+  opacity: 0.5;
+  transition: opacity .2s ease;
+}
+.theme-doc-sidebar-collapse-button:hover {
+  opacity: 1;
+}
+
+/* ── Scrollbar inside sidebar — thinner, elegant ── */
+.theme-doc-sidebar-menu::-webkit-scrollbar {
+  width: 4px;
+}
+.theme-doc-sidebar-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+.theme-doc-sidebar-menu::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--text-primary) !important;
+  color: var(--text-tertiary) !important;
+  border-top: 1px solid var(--border);
+}
+
+.footer__title {
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-size: 0.92rem !important;
+}
+
+.footer__link-item {
+  transition: color 0.15s ease !important;
+  font-size: 0.87rem !important;
+}
+
+.footer__link-item:hover {
+  color: var(--ifm-color-primary-lighter) !important;
+}
+
+.footer__copyright {
+  color: #64748b !important;
+  font-size: 0.83rem !important;
+}
+
+/* ===== Breadcrumb ===== */
+.breadcrumbs__item:not(:last-child)::after {
+  content: '/';
+  margin: 0 0.5rem;
+  opacity: 0.3;
+}
+
+/* ===== Pagination ===== */
+.pagination-nav {
+  margin-top: 3rem;
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+
+.pagination-nav__label {
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+
+/* ===== Smooth scroll + selection ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgba(79, 70, 229, 0.2);
+  color: inherit;
+}
+
+/* ===== Badge ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.badge--primary { background: var(--ifm-color-primary-lightest); color: var(--ifm-color-primary-darkest); }
+.badge--success { background: #ecfdf5; color: #047857; }
+.badge--warning { background: #fffbeb; color: #b45309; }
+.badge--danger { background: #fef2f2; color: #dc2626; }
+
+/* ===== Image ===== */
+img {
+  border-radius: 8px;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
