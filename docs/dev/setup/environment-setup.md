@@ -301,6 +301,6 @@ uv pip list --format=json | python -m json.tool
 
 ## 下一步
 
-→ [项目源码结构](/docs/dev/project-structure) - 了解代码组织方式
-→ [自定义技能开发](/docs/dev/custom-skill-dev) - 开始编写你的第一个技能
-→ [贡献指南](/docs/dev/contributing) - 了解如何参与贡献
+→ [项目源码结构](/docs/dev/setup/project-structure) - 了解代码组织方式
+→ [自定义技能开发](/docs/dev/contribute/custom-skill-dev) - 开始编写你的第一个技能
+→ [贡献指南](/docs/dev/contribute/contributing) - 了解如何参与贡献

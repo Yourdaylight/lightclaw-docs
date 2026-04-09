@@ -180,8 +180,8 @@ lightclaw mcp add my-tool --command node --args server.js --transport stdio
 lightclaw mcp add remote-tool --url https://api.example.com/mcp --transport sse
 ```
 
-详细配置参见 [MCP 集成指南](/docs/config/mcp-integration)。
+详细配置参见 [MCP 集成指南](/docs/config/advanced/mcp-integration)。
 
 ## 开发自定义技能
 
-详见 [自定义技能开发](/docs/dev/custom-skill-dev)。
+详见 [自定义技能开发](/docs/dev/contribute/custom-skill-dev)。

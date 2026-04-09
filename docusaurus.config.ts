@@ -87,8 +87,8 @@ const config: Config = {
           items: [
             {label: '快速开始', to: '/'},
             {label: '安装指南', to: '/docs/getting-started/installation'},
-            {label: '内置场景', to: '/docs/user-guide/scenes'},
-            {label: '技能系统', to: '/docs/user-guide/skills'},
+            {label: '内置场景', to: '/docs/user-guide/core/scenes'},
+            {label: '技能系统', to: '/docs/user-guide/core/skills'},
           ],
         },
         {
@@ -96,7 +96,7 @@ const config: Config = {
           items: [
             {label: 'GitHub', href: 'https://github.com/orcakit/finnie'},
             {label: '博客', href: 'https://cloud.tencent.com/developer/column/107398'},
-            {label: '更新日志', to: '/docs/dev/changelog'},
+            {label: '更新日志', to: '/docs/dev/contribute/changelog'},
           ],
         },
         {

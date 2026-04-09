@@ -72,10 +72,10 @@ lightclaw run
 ## 下一步
 
 - [安装指南](/docs/getting-started/installation) - 详细安装说明
-- [内置场景](/docs/user-guide/scenes) - 了解 6 大深度打磨场景
-- [技能系统](/docs/user-guide/skills) - 探索内置和自定义技能
-- [配置指南](/docs/config/llm-providers) - 配置 LLM 供应商和渠道
-- [架构设计](/docs/arch/overview) - 深入了解系统架构
+- [内置场景](/docs/user-guide/core/scenes) - 了解 6 大深度打磨场景
+- [技能系统](/docs/user-guide/core/skills) - 探索内置和自定义技能
+- [配置指南](/docs/config/basic/llm-providers) - 配置 LLM 供应商和渠道
+- [架构设计](/docs/arch/core/overview) - 深入了解系统架构
 
 ---
 
