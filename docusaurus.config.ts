@@ -7,8 +7,8 @@ const config: Config = {
   tagline: '更易用、更省钱、越用越懂你的 AI 个人助手',
   favicon: 'img/favicon.ico',
 
-  url: 'https://Yourdaylight.github.io',
-  baseUrl: '/lightclaw-docs/',
+  url: 'https://lightclaw.clawtown.cn',
+  baseUrl: '/',
 
   organizationName: 'Yourdaylight',
   projectName: 'lightclaw-docs',
